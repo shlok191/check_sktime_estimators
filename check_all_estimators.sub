@@ -7,9 +7,12 @@
 executable = check_all_estimators.sh
 
 # Defining Endpoints
-log = hello-ospool_$(Cluster)_$(Process).log
-error = hello-ospool_$(Cluster)_$(Process).err
-output = hello-ospool_$(Cluster)_$(Process).out
+log = logs/check_all_estimators.log.txt
+error =logs/check_all_estimators.err.txt
+output = output/check_all_estimators.out.txt
+
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
 
 +JobDurationCategory = "Medium"
 
