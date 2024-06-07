@@ -1,0 +1,33 @@
+BootStrap: docker
+From: opensciencegrid/software-base:23-el9-release
+
+%post
+    # Install base packages
+    yum update -y
+    yum install -y gcc gcc-c++ make
+
+    # Download and setup Miniconda
+    export MINICONDA_VERSION=py39_4.12.0
+    export MINICONDA_FILE=Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh
+    wget https://repo.anaconda.com/miniconda/${MINICONDA_FILE}
+    bash ${MINICONDA_FILE} -b -p /opt/conda
+    rm ${MINICONDA_FILE}
+
+    # Install Miniconda
+    export PATH="/opt/conda/bin:${PATH}"
+    /opt/conda/bin/conda init bash
+    . /opt/conda/etc/profile.d/conda.sh
+    conda create -n sktime python=3.10
+    conda activate sktime
+
+    # Setup sk-time
+    pip install sktime[dev]
+
+%environment
+    export PATH="/opt/conda/bin:${PATH}"
+    source /opt/conda/etc/profile.d/conda.sh
+    conda activate sktime
+
+%runscript
+    echo "Running sktime environment..."
+    "$@"

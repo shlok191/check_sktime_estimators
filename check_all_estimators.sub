@@ -1,0 +1,21 @@
+# check_all_estimators.sub
+# The submit file for check_all_estimators
+
++SingularityImage = "osdf:///ospool/uc-shared/public/OSG-Staff/pytorch-2.1.1.sif"
+
+# Name of the executable
+executable = check_all_estimators.sh
+
+# Defining Endpoints
+log = hello-ospool_$(Cluster)_$(Process).log
+error = hello-ospool_$(Cluster)_$(Process).err
+output = hello-ospool_$(Cluster)_$(Process).out
+
++JobDurationCategory = "Medium"
+
+requirements = 
+request_cpus = 1
+request_memory = 16GB
+request_disk = 10GB
+
+queue 1
