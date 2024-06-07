@@ -1,7 +1,7 @@
 # check_all_estimators.sub
 # The submit file for check_all_estimators
 
-+SingularityImage = "osdf:///ospool/uc-shared/public/OSG-Staff/pytorch-2.1.1.sif"
++SingularityImage = "sdf:///ospool/ap21/data/ssabarwal/sktime_img.sif"
 
 # Name of the executable
 executable = check_all_estimators.sh

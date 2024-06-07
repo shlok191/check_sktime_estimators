@@ -1,4 +1,4 @@
-!/bin/bash
+# !/bin/bash
 #
 # check_all_estimators.sh
 # Runs check_estimator() for all estimators in sk-time
