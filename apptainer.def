@@ -3,9 +3,9 @@ From: opensciencegrid/software-base:23-cuda_11_8_0-release
 
 %post
     # Install base packages
-    apt-get update -y
-    apt-get install -y build-essential
-
+    yum update -y
+    yum install -y gcc gcc-c++ make wget
+    
     # Download and setup Miniconda
     export MINICONDA_VERSION=py39_4.12.0
     export MINICONDA_FILE=Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh
