@@ -17,7 +17,9 @@ def check_estimator_wrapper(args):
             status = check_estimator(estimator, verbose=False)
             end_time = time.time()
             results.append((status, end_time - start_time))
+    
         return estimator, results
+    
     except Exception as e:
         print(f"Error while checking estimator {estimator}: {e}")
         traceback.print_exc()
