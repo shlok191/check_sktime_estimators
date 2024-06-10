@@ -17,11 +17,11 @@ def check_estimator_wrapper(args):
             status = check_estimator(estimator, verbose=False)
             end_time = time.time()
             results.append((status, end_time - start_time))
-        return results
+        return estimator, results
     except Exception as e:
         print(f"Error while checking estimator {estimator}: {e}")
         traceback.print_exc()
-        return []
+        return estimator, [str(e)]
 
 
 def check_all_estimators(num_processes=4):
@@ -32,12 +32,8 @@ def check_all_estimators(num_processes=4):
         Returns a list of lists consisting of each estimator,
         the status of their checks and the total time taken
     """
-    statuses = []
     estimators = all_estimators(return_names=False)
-    num_runs = 1
-
-    # Creating a progress bar to gauge progress
-    progress_bar = tqdm(estimators, total=len(estimators), unit="estimator")
+    num_runs = 10
 
     # Create a pool of worker processes
     pool = mp.Pool(processes=num_processes)
@@ -58,23 +54,22 @@ def check_all_estimators(num_processes=4):
     pool.close()
     pool.join()
 
-    # Collect the results
-    for estimator, result in zip(estimators, results):
-        if result:
-            metadata = {}
-            metadata["name"] = str(estimator)
-            metadata["results"] = result
-            statuses.append(metadata)
-            # Update the progress bar
-            progress_bar.set_postfix(estimator=metadata["name"])
+    # Write the results to a text file
+    with open("estimator_results.txt", "w") as f:
+        for estimator, result in results:
+            f.write(f"Estimator: {estimator}\n")
+            f.write("Results:\n")
+            for status, time_taken in result:
+                f.write(f"Status: {status}, Time taken: {time_taken:.6f} seconds\n")
+            f.write("\n")
 
-    return statuses
+    return results
 
 
 # Attempting to check all the estimators
 try:
     status = check_all_estimators()
-    print(status)
+    print("Results written to estimator_results.txt")
 except Exception as e:
     print(f"Error occurred while checking all estimators: {e}")
     traceback.print_exc()
