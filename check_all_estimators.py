@@ -15,10 +15,12 @@ def check_estimator_wrapper(args):
         total_time = 0
         for _ in range(num_runs):
             start_time = time.time()
+
             status = check_estimator(estimator, verbose=False)
             end_time = time.time()
             total_time += end_time - start_time
-            results.append((status, end_time - start_time))
+
+            results.append((str(status), end_time - start_time))
         average_time = total_time / num_runs
         return estimator, results, average_time
     except Exception as e:
@@ -57,6 +59,7 @@ def check_all_estimators(num_processes=4):
     # Organize the results into a dictionary
     estimator_results = {}
     for estimator, result, average_time in results:
+
         estimator_results[str(estimator)] = {
             "results": result,
             "average_time": average_time,
